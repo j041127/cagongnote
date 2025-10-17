@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>카공노트 – 카공족을 위한 설문</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>카공노트 ☕</h1>
+      <p class="subtitle">카페에서 공부하는 사람들의 진짜 이야기</p>
+    </header>
+
+    <main>
+      <!-- 설문 폼 -->
+      <section id="survey" class="card">
+        <h2>📋 카공족 설문 참여하기</h2>
+        <form id="surveyForm">
+          <div class="question">
+            <label>1. 카페에서 공부하거나 일할 때 가장 불편했던 점은 무엇인가요?</label>
+            <textarea name="q1" required></textarea>
+          </div>
+
+          <div class="question">
+            <label>2. 선호하는 카페는 어디인가요?</label>
+            <div class="options">
+              <label><input type="radio" name="q2" value="스타벅스" required> 스타벅스</label>
+              <label><input type="radio" name="q2" value="투썸 플레이스"> 투썸 플레이스</label>
+              <label><input type="radio" name="q2" value="메가커피"> 메가커피</label>
+              <label><input type="radio" name="q2" value="이디야"> 이디야</label>
+              <label><input type="radio" name="q2" value="커피빈"> 커피빈</label>
+            </div>
+          </div>
+
+          <div class="question">
+            <label>3. 카페에서 집중을 유지하기 위해 본인만의 팁이나 루틴이 있나요?</label>
+            <textarea name="q3"></textarea>
+          </div>
+
+          <div class="question">
+            <label>4. 다른 사람과 공간을 공유할 때 지켜줬으면 하는 매너가 있다면 알려주세요.</label>
+            <textarea name="q4"></textarea>
+          </div>
+
+          <div class="question">
+            <label>5. 카공족을 위한 서비스에 어떤 기능이 있었으면 좋겠나요?</label>
+            <div class="options">
+              <label><input type="checkbox" name="q5" value="조용한 카페 지도"> 조용한 카페 지도</label>
+              <label><input type="checkbox" name="q5" value="실시간 자리 정보"> 실시간 자리 정보</label>
+              <label><input type="checkbox" name="q5" value="집중 타이머"> 집중 타이머</label>
+              <label><input type="checkbox" name="q5" value="사용자 후기 공유"> 사용자 후기 공유</label>
+              <label><input type="checkbox" name="q5" value="기타"> 기타</label>
+            </div>
+          </div>
+
+          <button type="submit" id="submitBtn">제출하기</button>
+        </form>
+      </section>
+
+      <!-- 결과 시각화 -->
+      <section id="results" class="card">
+        <h2>📊 실시간 결과 보기</h2>
+        <div class="charts">
+          <div>
+            <h3>Q2. 선호 카페</h3>
+            <canvas id="q2Chart"></canvas>
+          </div>
+          <div>
+            <h3>Q5. 원하는 기능</h3>
+            <canvas id="q5Chart"></canvas>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2025 카공노트 | 함께 만드는 카공족 정보 플랫폼</p>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
