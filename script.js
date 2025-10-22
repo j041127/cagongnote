@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   // === 여기에 본인 웹앱 URL을 넣으세요 ===
-  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxbPXtqrslaIqnZVL4iSeW6ziovck1fy_0HRYp457h_MhBYZyb8P30agacOcza1h8En-g/exec";
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwnneihEqZ1wbkBMkjz7D3P5ithPHwZvpUlpBp0FFqEYz363yjz8b56_90h4FwwRWor/exec";
 
   const form = document.getElementById("surveyForm");
   const q2Canvas = document.getElementById("q2Chart");
