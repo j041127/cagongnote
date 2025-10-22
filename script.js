@@ -7,9 +7,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const q5Canvas = document.getElementById("q5Chart");
   let q2Chart, q5Chart;
 
-  // 제출 시 Google Sheets로 데이터 전송
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  // iframe 생성 (CORS 회피용)
+  const iframe = document.createElement("iframe");
+  iframe.name = "hidden_iframe";
+  iframe.style.display = "none";
+  document.body.appendChild(iframe);
+
+  // form 속성 수정
+  form.action = WEB_APP_URL;
+  form.method = "POST";
+  form.target = "hidden_iframe";
+
+  // 제출 시 처리
+  form.addEventListener("submit", (e) => {
+    e.preventDefault(); // 기본 submit 막기
 
     const formData = new FormData(form);
     const q1 = formData.get("q1");
@@ -18,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const q4 = formData.get("q4");
     const q5 = formData.getAll("q5");
 
+    // iframe에 hidden form을 이용해 전송
     const payload = {
       timestamp: new Date().toISOString(),
       q1,
@@ -27,21 +39,28 @@ document.addEventListener("DOMContentLoaded", () => {
       q5: q5.join(", ")
     };
 
-    try {
-      const res = await fetch(WEB_APP_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
+    // iframe POST 전송
+    const hiddenForm = document.createElement("form");
+    hiddenForm.style.display = "none";
+    hiddenForm.action = WEB_APP_URL;
+    hiddenForm.method = "POST";
+    hiddenForm.target = "hidden_iframe";
 
-      const data = await res.json();
-      alert("응답이 제출되었습니다!");
-      form.reset();
-      loadResults(); // 새로고침 없이 결과 업데이트
-    } catch (error) {
-      console.error(error);
-      alert("데이터 저장 중 오류가 발생했습니다.");
+    for (const key in payload) {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = key;
+      input.value = payload[key];
+      hiddenForm.appendChild(input);
     }
+
+    document.body.appendChild(hiddenForm);
+    hiddenForm.submit();
+    document.body.removeChild(hiddenForm);
+
+    alert("응답이 제출되었습니다!");
+    form.reset();
+    loadResults(); // 제출 후 차트 업데이트
   });
 
   // 결과 불러오기
@@ -50,7 +69,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const res = await fetch(WEB_APP_URL + "?action=getData");
       const rows = await res.json();
 
-      // rows는 [{timestamp, q1, q2, q3, q4, q5}, ...] 형태
       const q2Counts = {};
       const q5Counts = {};
 
